@@ -5,17 +5,19 @@
  */
 package courseregistrationsystem.ui;
 
+import javax.swing.ImageIcon;
+
+
 /**
  *
  * @author dinhp
  */
 public class ManagerForm extends javax.swing.JFrame {
-
-    /**
-     * Creates new form ManagerForm
-     */
+    private StudentManagementPanel mStudentPanel;
     public ManagerForm() {
         initComponents();
+        
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -32,12 +34,14 @@ public class ManagerForm extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnManementStudent = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
+        tplMainBoard = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,17 +79,17 @@ public class ManagerForm extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton3);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/10207-man-student-light-skin-tone-icon-24.png"))); // NOI18N
-        jButton4.setText("Quản lý sinh viên");
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnManementStudent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/10207-man-student-light-skin-tone-icon-24.png"))); // NOI18N
+        btnManementStudent.setText("Quản lý sinh viên");
+        btnManementStudent.setFocusable(false);
+        btnManementStudent.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnManementStudent.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnManementStudent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnManementStudentActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton4);
+        jToolBar1.add(btnManementStudent);
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/Actions-document-edit-icon-32.png"))); // NOI18N
         jButton5.setText("Quản lý môn học");
@@ -114,7 +118,7 @@ public class ManagerForm extends javax.swing.JFrame {
         jToolBar1.add(jButton7);
 
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/icon-48-dkhp.png"))); // NOI18N
-        jButton8.setText("Quản lý đăng kí \nhọc phần");
+        jButton8.setText("Quản lý ĐKHP");
         jButton8.setFocusable(false);
         jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -132,21 +136,37 @@ public class ManagerForm extends javax.swing.JFrame {
         jButton9.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton9);
 
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/Actions-view-choose-icon-24.png"))); // NOI18N
+        jButton10.setText("Tổng quan ");
+        jButton10.setFocusable(false);
+        jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton10.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton10);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(tplMainBoard)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(363, Short.MAX_VALUE))
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tplMainBoard, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -160,9 +180,15 @@ public class ManagerForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void btnManementStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManementStudentActionPerformed
+        if(mStudentPanel == null){
+            mStudentPanel = new StudentManagementPanel();
+            ImageIcon icon = new ImageIcon(getClass()
+                    .getResource("courseregistrationsystem/icon/10207-man-student-light-skin-tone-icon-16"));
+            tplMainBoard.addTab("Quản lý sinh viên",icon,mStudentPanel, "Quản lý sinh viên");
+        }
+        tplMainBoard.setSelectedComponent(mStudentPanel);
+    }//GEN-LAST:event_btnManementStudentActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
@@ -171,6 +197,10 @@ public class ManagerForm extends javax.swing.JFrame {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton10ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,10 +238,11 @@ public class ManagerForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnManementStudent;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
@@ -219,5 +250,6 @@ public class ManagerForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTabbedPane tplMainBoard;
     // End of variables declaration//GEN-END:variables
 }
