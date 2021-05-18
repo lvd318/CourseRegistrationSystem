@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated May 18, 2021 7:59:37 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="courseregistrationsystem.entity.Class" table="class" catalog="qldkmh" optimistic-lock="version">
+        <id name="classId" type="string">
+            <column name="class_id" length="10" />
+            <generator class="assigned" />
+        </id>
+        <property name="total" type="java.lang.Integer">
+            <column name="total" />
+        </property>
+        <property name="totalMales" type="java.lang.Integer">
+            <column name="total_males" />
+        </property>
+        <property name="totalFemales" type="java.lang.Integer">
+            <column name="total_females" />
+        </property>
+    </class>
+</hibernate-mapping>

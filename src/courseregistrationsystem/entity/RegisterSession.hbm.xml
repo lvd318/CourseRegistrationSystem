@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated May 18, 2021 7:59:37 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="courseregistrationsystem.entity.RegisterSession" table="register_session" catalog="qldkmh" optimistic-lock="version">
+        <id name="sessionId" type="java.lang.Integer">
+            <column name="session_id" />
+            <generator class="identity" />
+        </id>
+        <property name="startDay" type="date">
+            <column name="start_day" length="10" not-null="true" />
+        </property>
+        <property name="endDay" type="date">
+            <column name="end_day" length="10" not-null="true" />
+        </property>
+        <property name="semNameFk" type="string">
+            <column name="sem_name_FK" length="5" not-null="true" />
+        </property>
+        <property name="yearFk" type="int">
+            <column name="year_FK" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

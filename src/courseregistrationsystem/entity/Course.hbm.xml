@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated May 18, 2021 7:59:37 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="courseregistrationsystem.entity.Course" table="course" catalog="qldkmh" optimistic-lock="version">
+        <id name="courseId" type="java.lang.Integer">
+            <column name="course_id" />
+            <generator class="identity" />
+        </id>
+        <property name="subjectId" type="string">
+            <column name="subject_id" length="10" not-null="true" />
+        </property>
+        <property name="subjectName" type="string">
+            <column name="subject_name" length="50" not-null="true" />
+        </property>
+        <property name="credits" type="int">
+            <column name="credits" not-null="true" />
+        </property>
+        <property name="gvlt" type="string">
+            <column name="gvlt" length="50" not-null="true" />
+        </property>
+        <property name="room" type="string">
+            <column name="room" length="10" not-null="true" />
+        </property>
+        <property name="thu" type="string">
+            <column name="thu" length="10" not-null="true" />
+        </property>
+        <property name="ca" type="string">
+            <column name="ca" length="5" not-null="true" />
+        </property>
+        <property name="slots" type="int">
+            <column name="slots" not-null="true" />
+        </property>
+        <property name="semName" type="string">
+            <column name="sem_name" length="5" not-null="true" />
+        </property>
+        <property name="year" type="int">
+            <column name="year" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated May 18, 2021 7:59:37 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="courseregistrationsystem.entity.Student" table="student" catalog="qldkmh" optimistic-lock="version">
+        <id name="studentId" type="string">
+            <column name="student_id" length="10" />
+            <generator class="assigned" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="50" not-null="true" />
+        </property>
+        <property name="sex" type="string">
+            <column name="sex" length="5" not-null="true" />
+        </property>
+        <property name="telephone" type="string">
+            <column name="telephone" length="10" />
+        </property>
+        <property name="classId" type="string">
+            <column name="class_id" length="10" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="20" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
