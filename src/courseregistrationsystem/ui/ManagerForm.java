@@ -5,7 +5,11 @@
  */
 package courseregistrationsystem.ui;
 
+//import javax.swing.JPanel;
+
 import javax.swing.ImageIcon;
+
+
 
 
 /**
@@ -13,7 +17,8 @@ import javax.swing.ImageIcon;
  * @author dinhp
  */
 public class ManagerForm extends javax.swing.JFrame {
-    private StudentManagementPanel mStudentPanel;
+    private StudentManagementPanel mStudentPanel = null;
+    private AccountManagementPanel mAccountPanel = null;
     public ManagerForm() {
         initComponents();
         
@@ -33,7 +38,7 @@ public class ManagerForm extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
-        jButton3 = new javax.swing.JButton();
+        btnManementAccount = new javax.swing.JButton();
         btnManementStudent = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -41,9 +46,11 @@ public class ManagerForm extends javax.swing.JFrame {
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
-        tplMainBoard = new javax.swing.JTabbedPane();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Course Registration System");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jToolBar1.setRollover(true);
 
@@ -67,17 +74,17 @@ public class ManagerForm extends javax.swing.JFrame {
         jToolBar1.add(jButton2);
         jToolBar1.add(jSeparator1);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/Person-Male-Light-icon-24.png"))); // NOI18N
-        jButton3.setText("Quản lý tài khoản");
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnManementAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/Person-Male-Light-icon-24.png"))); // NOI18N
+        btnManementAccount.setText("Quản lý tài khoản");
+        btnManementAccount.setFocusable(false);
+        btnManementAccount.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnManementAccount.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnManementAccount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnManementAccountActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton3);
+        jToolBar1.add(btnManementAccount);
 
         btnManementStudent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/10207-man-student-light-skin-tone-icon-24.png"))); // NOI18N
         btnManementStudent.setText("Quản lý sinh viên");
@@ -91,7 +98,7 @@ public class ManagerForm extends javax.swing.JFrame {
         });
         jToolBar1.add(btnManementStudent);
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/Actions-document-edit-icon-32.png"))); // NOI18N
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/Actions-document-edit-icon-24.png"))); // NOI18N
         jButton5.setText("Quản lý môn học");
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -152,11 +159,11 @@ public class ManagerForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(tplMainBoard)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE)
+                    .addComponent(jTabbedPane1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -164,8 +171,8 @@ public class ManagerForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tplMainBoard, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -176,18 +183,20 @@ public class ManagerForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void btnManementAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManementAccountActionPerformed
+        if(mAccountPanel == null){
+            mAccountPanel = new AccountManagementPanel();
+            jTabbedPane1.add("Quản lý sinh viên",mAccountPanel);
+        }
+        jTabbedPane1.setSelectedComponent(mAccountPanel);
+    }//GEN-LAST:event_btnManementAccountActionPerformed
 
     private void btnManementStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManementStudentActionPerformed
         if(mStudentPanel == null){
             mStudentPanel = new StudentManagementPanel();
-            ImageIcon icon = new ImageIcon(getClass()
-                    .getResource("courseregistrationsystem/icon/10207-man-student-light-skin-tone-icon-16"));
-            tplMainBoard.addTab("Quản lý sinh viên",icon,mStudentPanel, "Quản lý sinh viên");
+            jTabbedPane1.add("Quản lý sinh viên",mStudentPanel);
         }
-        tplMainBoard.setSelectedComponent(mStudentPanel);
+        jTabbedPane1.setSelectedComponent(mStudentPanel);
     }//GEN-LAST:event_btnManementStudentActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -238,18 +247,18 @@ public class ManagerForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnManementAccount;
     private javax.swing.JButton btnManementStudent;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JTabbedPane tplMainBoard;
     // End of variables declaration//GEN-END:variables
 }

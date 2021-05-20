@@ -1,58 +1,76 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package courseregistrationsystem.dao;
 
-import courseregistrationsystem.entity.Student;
+import courseregistrationsystem.entity.Account;
 import java.util.*;
 import org.hibernate.*;
 
-public class StudentDAO {
-    public List<Student> findAll(){
+public class AccountDAO {
+     public List<Account> findAll(){
         try{
             Session session = HibernateUtil.getSessionFactory().openSession();
-            return session.createCriteria(Student.class).list();
+            return session.createCriteria(Account.class).list();
         }catch(Exception ex){
             return null;
         }
     }
-    
-    public List<Student> findAllByClassId(String classId){
-        try{
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            
-            String hql = "from Student where classId like :classId";
-            Query query = session.createQuery(hql);
-            query.setParameter("classId", classId);
-            
-            return query.list();
-        }catch(Exception ex){
-            return null;
-        }
-    }
-    
-    public Student findStudent(String studentId){
+     
+    public Account findAccount(String username){
         Transaction trans = null;
-        Student st = null;
+        Account acc = null;
         try{
             Session session = HibernateUtil.getSessionFactory().openSession();
             trans = session.beginTransaction();
             
-            st = (Student) session.get(Student.class,studentId);
+            acc = (Account) session.get(Account.class,username);
             
             trans.commit();
         }catch(Exception e){
             trans.rollback();
         }
         
-        return st;
+        return acc;
     }
     
-    public boolean deleteStudent(Student st){
+    public boolean saveAccount(Account acc){
+        Transaction trans = null;
+        try{
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            trans = session.beginTransaction();
+            session.save(acc);
+            trans.commit();
+            return true;
+        }catch(Exception e){
+            trans.rollback();
+            return false;
+        }
+    }
+    
+    public boolean updateAccount(Account acc){
+        Transaction trans = null;
+        try{
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            trans = session.beginTransaction();
+            session.update(acc);
+            trans.commit();
+            return true;
+        }catch(Exception e){
+            trans.rollback();
+            return false;
+        }
+    }
+    
+    public boolean deleteAccount(Account acc){
         Transaction trans = null;
         try{
             Session session = HibernateUtil.getSessionFactory().openSession();
             trans = session.beginTransaction();
             
-            session.delete(st);
+            session.delete(acc);
             
             trans.commit();
             return true;
@@ -60,34 +78,7 @@ public class StudentDAO {
             trans.rollback();
             return false;
         }
-       
     }
     
-    public boolean saveStudent(Student st){
-        Transaction trans = null;
-        try{
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            trans = session.beginTransaction();
-            session.save(st);
-            trans.commit();
-            return true;
-        }catch(Exception e){
-            trans.rollback();
-            return false;
-        }
-    }
     
-    public boolean updateStudent(Student st){
-        Transaction trans = null;
-        try{
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            trans = session.beginTransaction();
-            session.update(st);
-            trans.commit();
-            return true;
-        }catch(Exception e){
-            trans.rollback();
-            return false;
-        }
-    }
 }
