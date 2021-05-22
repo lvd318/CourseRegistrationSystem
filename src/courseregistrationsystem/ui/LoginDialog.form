@@ -139,6 +139,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="&#x110;&#x103;ng nh&#x1ead;p"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoginActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -158,7 +161,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Course Registration System"/>
+        <Property name="text" type="java.lang.String" value="H&#x1ec7; th&#x1ed1;ng &#x111;&#x103;ng k&#xed; m&#xf4;n h&#x1ecd;c"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -8,7 +8,7 @@ package courseregistrationsystem.entity;
  */
 public class Account  implements java.io.Serializable {
 
-
+     private String hoten;
      private String username;
      private String password;
 
@@ -20,6 +20,14 @@ public class Account  implements java.io.Serializable {
        this.password = password;
     }
    
+    public String getHoten() {
+        return hoten;
+    }
+
+    public void setHoten(String hoten) {
+        this.hoten = hoten;
+    }
+
     public String getUsername() {
         return this.username;
     }
@@ -39,5 +47,3 @@ public class Account  implements java.io.Serializable {
 
 
 }
-
-

@@ -25,7 +25,7 @@ public class AccountDAO {
         try{
             Session session = HibernateUtil.getSessionFactory().openSession();
             trans = session.beginTransaction();
-            
+   
             acc = (Account) session.get(Account.class,username);
             
             trans.commit();
@@ -80,5 +80,22 @@ public class AccountDAO {
         }
     }
     
+    public Account checkLogin(String username, String password){
+        
+        Transaction trans = null;
+        
+        try{
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        trans = session.beginTransaction();
+        
+        Account acc = (Account)session.get(Account.class, username);
+        
+        if(acc != null && acc.getPassword().equals(password)){
+            return acc;
+        }
+        }catch(Exception e){   
+        }
+        return null;
+    }
     
 }

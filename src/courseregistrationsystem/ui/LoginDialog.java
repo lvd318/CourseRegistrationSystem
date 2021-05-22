@@ -5,18 +5,23 @@
  */
 package courseregistrationsystem.ui;
 
+import courseregistrationsystem.dao.AccountDAO;
+import courseregistrationsystem.entity.Account;
+import java.util.Arrays;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author dinhp
  */
 public class LoginDialog extends javax.swing.JDialog {
 
-    /**
-     * Creates new form LoginDialog
-     */
+    public final ManagerForm managerForm = new ManagerForm();
+    
     public LoginDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -61,6 +66,11 @@ public class LoginDialog extends javax.swing.JDialog {
 
         btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/Login-icon-16.png"))); // NOI18N
         btnLogin.setText("Đăng nhập");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -106,7 +116,7 @@ public class LoginDialog extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel1.setText("Course Registration System");
+        jLabel1.setText("Hệ thống đăng kí môn học");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -145,6 +155,25 @@ public class LoginDialog extends javax.swing.JDialog {
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        AccountDAO dao = new AccountDAO();
+        try{  
+            String username = txtUsername.getText();
+            String password = new String(txtPassword.getPassword());
+            
+            Account acc = dao.checkLogin(username, password);
+            
+            if(acc != null){
+                this.setVisible(false);
+                managerForm.setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng tài khoản, mật khẩu");
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng thông tin");
+        }
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
      * @param args the command line arguments

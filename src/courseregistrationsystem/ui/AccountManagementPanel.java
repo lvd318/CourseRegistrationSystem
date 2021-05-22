@@ -27,10 +27,11 @@ public class AccountManagementPanel extends javax.swing.JPanel {
     private void LoadData(){
         AccountDAO ad = new AccountDAO();
         DefaultTableModel dtm = new DefaultTableModel();
+        dtm.addColumn("Họ tên");
         dtm.addColumn("Tài khoản");
         dtm.addColumn("Mật khẩu");
         for(Account acc : ad.findAll()){
-            dtm.addRow(new Object[]{acc.getUsername(), acc.getPassword()});
+            dtm.addRow(new Object[]{ acc.getHoten(),acc.getUsername(), acc.getPassword()});
         }
         this.tblAccounts.setModel(dtm);
     }
@@ -47,14 +48,16 @@ public class AccountManagementPanel extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         btnDelete2 = new javax.swing.JButton();
         btnResetPassword2 = new javax.swing.JButton();
-        txtPassword2 = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JTextField();
         btnUpdate2 = new javax.swing.JButton();
-        txtUsername2 = new javax.swing.JTextField();
+        txtUsername = new javax.swing.JTextField();
         btnFind2 = new javax.swing.JButton();
         btnNew2 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         btnSave2 = new javax.swing.JButton();
+        txtHoten = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
 
         tblAccounts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -102,7 +105,7 @@ public class AccountManagementPanel extends javax.swing.JPanel {
             }
         });
 
-        txtPassword2.addActionListener(new java.awt.event.ActionListener() {
+        txtPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPasswordActionPerformed(evt);
             }
@@ -116,7 +119,7 @@ public class AccountManagementPanel extends javax.swing.JPanel {
             }
         });
 
-        txtUsername2.addActionListener(new java.awt.event.ActionListener() {
+        txtUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtUsernameActionPerformed(evt);
             }
@@ -150,6 +153,14 @@ public class AccountManagementPanel extends javax.swing.JPanel {
             }
         });
 
+        txtHoten.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHotentxtUsernameActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setText("Họ tên:");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -160,12 +171,12 @@ public class AccountManagementPanel extends javax.swing.JPanel {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtUsername2))
+                        .addComponent(txtUsername))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(6, 6, 6)
+                        .addComponent(txtPassword))
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addComponent(jLabel7)
-                            .addGap(6, 6, 6)
-                            .addComponent(txtPassword2))
                         .addGroup(jPanel4Layout.createSequentialGroup()
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -177,7 +188,11 @@ public class AccountManagementPanel extends javax.swing.JPanel {
                                 .addComponent(btnUpdate2)
                                 .addComponent(btnSave2)
                                 .addComponent(btnDelete2))
-                            .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                            .addComponent(jLabel11)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtHoten))))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -185,13 +200,17 @@ public class AccountManagementPanel extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(txtHoten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(txtUsername2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(txtPassword2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(94, 94, 94)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(63, 63, 63)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNew2)
                     .addComponent(btnSave2))
@@ -264,6 +283,7 @@ public class AccountManagementPanel extends javax.swing.JPanel {
             Account acc = new Account();
             acc.setUsername(this.txtUsername.getText());
             acc.setPassword(this.txtPassword.getText());
+            acc.setHoten(this.txtHoten.getText());
             if(ad.saveAccount(acc)){
                 JOptionPane.showMessageDialog(null, "Thêm 1 tài khoản thành công");
                 LoadData();
@@ -280,6 +300,8 @@ public class AccountManagementPanel extends javax.swing.JPanel {
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         txtUsername.setText("");
         txtPassword.setText("");
+        txtHoten.setText("");
+        LoadData();
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
@@ -294,12 +316,14 @@ public class AccountManagementPanel extends javax.swing.JPanel {
                 if(acc != null){
                     txtUsername.setText(acc.getUsername());
                     txtPassword.setText(acc.getPassword());
+                    txtHoten.setText(acc.getHoten());
 
                     //Fill Data in table
                     DefaultTableModel dtm = new DefaultTableModel();
+                    dtm.addColumn("Họ tên");
                     dtm.addColumn("Tài khoản");
                     dtm.addColumn("Mật khẩu");
-                    dtm.addRow(new Object[]{acc.getUsername(), acc.getPassword()});
+                    dtm.addRow(new Object[]{ acc.getHoten(),acc.getUsername(), acc.getPassword()});
                     this.tblAccounts.setModel(dtm);
                 }else
                 JOptionPane.showMessageDialog(null,"Không tìm thấy tài khoản này");
@@ -319,6 +343,7 @@ public class AccountManagementPanel extends javax.swing.JPanel {
             Account acc = new Account();
             acc.setUsername(this.txtUsername.getText());
             acc.setPassword(this.txtPassword.getText());
+            acc.setHoten(this.txtHoten.getText());
 
             if(ad.updateAccount(acc)){
                 JOptionPane.showMessageDialog(null, "Tài khoản đã được cập nhật");
@@ -374,17 +399,22 @@ public class AccountManagementPanel extends javax.swing.JPanel {
         AccountDAO ad = new AccountDAO();
         try{
             int id = tblAccounts.getSelectedRow();
-            String accudentId = tblAccounts.getValueAt(id, 0).toString();
-            Account acc = ad.findAccount(accudentId);
+            String username = tblAccounts.getValueAt(id,1).toString();
+            Account acc = ad.findAccount(username);
 
             txtUsername.setText(acc.getUsername());
             txtPassword.setText(acc.getUsername());
+            txtHoten.setText(acc.getHoten());
         }catch(Exception e){
         }
     }//GEN-LAST:event_tblAccountsMouseClicked
+
+    private void txtHotentxtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHotentxtUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHotentxtUsernameActionPerformed
     
     public boolean validateForm(){
-        if(txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()){
+        if(txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty() || txtHoten.getText().isEmpty()){
             return false;
         }
         return true;
@@ -392,70 +422,23 @@ public class AccountManagementPanel extends javax.swing.JPanel {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnDelete1;
     private javax.swing.JButton btnDelete2;
-    private javax.swing.JButton btnDelete3;
-    private javax.swing.JButton btnDelete4;
-    private javax.swing.JButton btnFind;
-    private javax.swing.JButton btnFind1;
     private javax.swing.JButton btnFind2;
-    private javax.swing.JButton btnFind3;
-    private javax.swing.JButton btnFind4;
-    private javax.swing.JButton btnNew;
-    private javax.swing.JButton btnNew1;
     private javax.swing.JButton btnNew2;
-    private javax.swing.JButton btnNew3;
-    private javax.swing.JButton btnNew4;
-    private javax.swing.JButton btnResetPassword;
-    private javax.swing.JButton btnResetPassword1;
     private javax.swing.JButton btnResetPassword2;
-    private javax.swing.JButton btnResetPassword3;
-    private javax.swing.JButton btnResetPassword4;
-    private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnSave1;
     private javax.swing.JButton btnSave2;
-    private javax.swing.JButton btnSave3;
-    private javax.swing.JButton btnSave4;
-    private javax.swing.JButton btnUpdate;
-    private javax.swing.JButton btnUpdate1;
     private javax.swing.JButton btnUpdate2;
-    private javax.swing.JButton btnUpdate3;
-    private javax.swing.JButton btnUpdate4;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable tblAccounts;
-    private javax.swing.JTable tblAccounts1;
+    private javax.swing.JTextField txtHoten;
     private javax.swing.JTextField txtPassword;
-    private javax.swing.JTextField txtPassword1;
-    private javax.swing.JTextField txtPassword2;
-    private javax.swing.JTextField txtPassword3;
-    private javax.swing.JTextField txtPassword4;
     private javax.swing.JTextField txtUsername;
-    private javax.swing.JTextField txtUsername1;
-    private javax.swing.JTextField txtUsername2;
-    private javax.swing.JTextField txtUsername3;
-    private javax.swing.JTextField txtUsername4;
     // End of variables declaration//GEN-END:variables
 }

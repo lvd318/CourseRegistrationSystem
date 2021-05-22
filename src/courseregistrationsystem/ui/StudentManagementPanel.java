@@ -421,8 +421,7 @@ public class StudentManagementPanel extends javax.swing.JPanel {
         txtClass.setText("");
         txtStudentName.setText("");
         txtTelephone.setText("");
-        rdbMale.setSelected(false) ;
-        rdbFemale.setSelected(false);
+        buttonGroup1.clearSelection();
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnResetPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetPasswordActionPerformed
