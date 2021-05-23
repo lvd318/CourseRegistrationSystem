@@ -6,7 +6,10 @@
 package courseregistrationsystem.ui;
 
 import courseregistrationsystem.dao.AccountDAO;
+import courseregistrationsystem.dao.SharedData;
+import courseregistrationsystem.dao.StudentDAO;
 import courseregistrationsystem.entity.Account;
+import courseregistrationsystem.entity.Student;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
 
@@ -17,7 +20,8 @@ import javax.swing.JOptionPane;
 public class LoginDialog extends javax.swing.JDialog {
 
     public final ManagerForm managerForm = new ManagerForm();
-    
+    public final StudentForm studentForm = new StudentForm();
+     
     public LoginDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -157,17 +161,26 @@ public class LoginDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        AccountDAO dao = new AccountDAO();
+        AccountDAO adao = new AccountDAO();
+        StudentDAO sdao = new StudentDAO();
         try{  
             String username = txtUsername.getText();
             String password = new String(txtPassword.getPassword());
             
-            Account acc = dao.checkLogin(username, password);
+            Account acc = adao.checkLogin(username, password);
+            Student st = sdao.checkLogin(username, password);
             
             if(acc != null){
                 this.setVisible(false);
                 managerForm.setVisible(true);
-            }else{
+                SharedData.manager = acc;
+            }
+            else if(st != null ){
+                this.setVisible(false);
+                studentForm.setVisible(true);
+                SharedData.student = st;
+            }
+            else{
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng tài khoản, mật khẩu");
             }
         }catch(Exception e){

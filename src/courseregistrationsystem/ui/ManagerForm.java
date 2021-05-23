@@ -5,11 +5,7 @@
  */
 package courseregistrationsystem.ui;
 
-//import javax.swing.JPanel;
-
-import javax.swing.ImageIcon;
-
-
+import courseregistrationsystem.dao.SharedData;
 
 
 /**
@@ -19,9 +15,9 @@ import javax.swing.ImageIcon;
 public class ManagerForm extends javax.swing.JFrame {
     private StudentManagementPanel mStudentPanel = null;
     private AccountManagementPanel mAccountPanel = null;
+    private SubjectManagementPanel mSubjectPanel = null;
     public ManagerForm() {
         initComponents();
-        
         setLocationRelativeTo(null);
     }
 
@@ -35,24 +31,39 @@ public class ManagerForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jToolBar1 = new javax.swing.JToolBar();
+        lbUsername = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         btnManementAccount = new javax.swing.JButton();
         btnManementStudent = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        btnManementSubject = new javax.swing.JButton();
+        btnManementSemester = new javax.swing.JButton();
+        btnManementClass = new javax.swing.JButton();
+        btnManementRegister = new javax.swing.JButton();
+        btnManementCourse = new javax.swing.JButton();
+        btnOverview = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Hệ thống đăng kí môn học");
+        setTitle("Hệ thống đăng kí học phần");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jToolBar1.setRollover(true);
+
+        lbUsername.setForeground(new java.awt.Color(255, 0, 0));
+        lbUsername.setText("aaaaaaa");
+        lbUsername.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                lbUsernamePropertyChange(evt);
+            }
+        });
+        jToolBar1.add(lbUsername);
 
         btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/Login-icon-32.png"))); // NOI18N
         btnLogout.setText("Đăng xuất");
@@ -71,6 +82,11 @@ public class ManagerForm extends javax.swing.JFrame {
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton2);
         jToolBar1.add(jSeparator1);
 
@@ -98,62 +114,72 @@ public class ManagerForm extends javax.swing.JFrame {
         });
         jToolBar1.add(btnManementStudent);
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/Actions-document-edit-icon-24.png"))); // NOI18N
-        jButton5.setText("Quản lý môn học");
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton5);
-
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/Manage_semester.png"))); // NOI18N
-        jButton6.setText("Quản lý học kì");
-        jButton6.setFocusable(false);
-        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnManementSubject.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/Actions-document-edit-icon-24.png"))); // NOI18N
+        btnManementSubject.setText("Quản lý môn học");
+        btnManementSubject.setFocusable(false);
+        btnManementSubject.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnManementSubject.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnManementSubject.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnManementSubjectActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton6);
+        jToolBar1.add(btnManementSubject);
 
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/kisspng-school-pictograms-icon-teacher-icon-classroom-icon-5d40763ee263d5.5330674915645056629273.png"))); // NOI18N
-        jButton7.setText("Quản lý lớp");
-        jButton7.setFocusable(false);
-        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton7);
-
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/icon-48-dkhp.png"))); // NOI18N
-        jButton8.setText("Quản lý ĐKHP");
-        jButton8.setFocusable(false);
-        jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        btnManementSemester.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/Manage_semester.png"))); // NOI18N
+        btnManementSemester.setText("Quản lý học kì");
+        btnManementSemester.setFocusable(false);
+        btnManementSemester.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnManementSemester.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnManementSemester.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                btnManementSemesterActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton8);
+        jToolBar1.add(btnManementSemester);
 
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/icon-48-study.png"))); // NOI18N
-        jButton9.setText("Quản lý học phần");
-        jButton9.setFocusable(false);
-        jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton9.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton9);
-
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/Actions-view-choose-icon-24.png"))); // NOI18N
-        jButton10.setText("Tổng quan ");
-        jButton10.setFocusable(false);
-        jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton10.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        btnManementClass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/kisspng-school-pictograms-icon-teacher-icon-classroom-icon-5d40763ee263d5.5330674915645056629273.png"))); // NOI18N
+        btnManementClass.setText("Quản lý lớp");
+        btnManementClass.setFocusable(false);
+        btnManementClass.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnManementClass.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnManementClass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                btnManementClassActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton10);
+        jToolBar1.add(btnManementClass);
+
+        btnManementRegister.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/icon-48-dkhp.png"))); // NOI18N
+        btnManementRegister.setText("Quản lý ĐKHP");
+        btnManementRegister.setFocusable(false);
+        btnManementRegister.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnManementRegister.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnManementRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManementRegisterActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnManementRegister);
+
+        btnManementCourse.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/icon-48-study.png"))); // NOI18N
+        btnManementCourse.setText("Quản lý học phần");
+        btnManementCourse.setFocusable(false);
+        btnManementCourse.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnManementCourse.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(btnManementCourse);
+
+        btnOverview.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/Actions-view-choose-icon-24.png"))); // NOI18N
+        btnOverview.setText("Tổng quan ");
+        btnOverview.setFocusable(false);
+        btnOverview.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnOverview.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnOverview.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOverviewActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnOverview);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -162,7 +188,7 @@ public class ManagerForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 808, Short.MAX_VALUE)
                     .addComponent(jTabbedPane1))
                 .addContainerGap())
         );
@@ -201,17 +227,41 @@ public class ManagerForm extends javax.swing.JFrame {
         jTabbedPane1.setSelectedComponent(mStudentPanel);
     }//GEN-LAST:event_btnManementStudentActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void btnManementSemesterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManementSemesterActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_btnManementSemesterActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void btnManementRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManementRegisterActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_btnManementRegisterActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    private void btnOverviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOverviewActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton10ActionPerformed
+    }//GEN-LAST:event_btnOverviewActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btnManementClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManementClassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnManementClassActionPerformed
+
+    private void lbUsernamePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_lbUsernamePropertyChange
+        // TODO add your handling code here:    
+    }//GEN-LAST:event_lbUsernamePropertyChange
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        lbUsername.setText(SharedData.manager.getUsername());
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnManementSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManementSubjectActionPerformed
+        if(mSubjectPanel == null){
+            mSubjectPanel = new SubjectManagementPanel();
+            jTabbedPane1.add("Quản lý môn học",mSubjectPanel);
+        }
+        jTabbedPane1.setSelectedComponent(mSubjectPanel);
+    }//GEN-LAST:event_btnManementSubjectActionPerformed
 
     /**
      * @param args the command line arguments
@@ -251,16 +301,17 @@ public class ManagerForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnManementAccount;
+    private javax.swing.JButton btnManementClass;
+    private javax.swing.JButton btnManementCourse;
+    private javax.swing.JButton btnManementRegister;
+    private javax.swing.JButton btnManementSemester;
     private javax.swing.JButton btnManementStudent;
-    private javax.swing.JButton jButton10;
+    private javax.swing.JButton btnManementSubject;
+    private javax.swing.JButton btnOverview;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel lbUsername;
     // End of variables declaration//GEN-END:variables
 }

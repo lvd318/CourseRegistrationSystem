@@ -1,27 +1,31 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package courseregistrationsystem.dao;
 
-import courseregistrationsystem.entity.Student;
+import courseregistrationsystem.entity.Subject;
 import java.util.*;
 import org.hibernate.*;
 
-public class StudentDAO {
-    public List<Student> findAll(){
+public class SubjectDAO {
+    public List<Subject> findAll(){
         try{
             Session session = HibernateUtil.getSessionFactory().openSession();
-            return session.createCriteria(Student.class).list();
+            return session.createCriteria(Subject.class).list();
         }catch(Exception ex){
             return null;
         }
     }
     
-    public List<Student> findAllByClassId(String classId){
+    public List<Subject> findAllBySubjectId(String subjectId){
         try{
             Session session = HibernateUtil.getSessionFactory().openSession();
             
-            String hql = "from Student where classId like :classId";
+            String hql = "from Subject where subjectId like :subjectId";
             Query query = session.createQuery(hql);
-            query.setParameter("classId", classId);
+            query.setParameter("subjectId", subjectId);
             
             return query.list();
         }catch(Exception ex){
@@ -29,14 +33,14 @@ public class StudentDAO {
         }
     }
     
-    public Student findStudent(String studentId){
+    public Subject findSubject(String subjectId){
         Transaction trans = null;
-        Student st = null;
+        Subject st = null;
         try{
             Session session = HibernateUtil.getSessionFactory().openSession();
             trans = session.beginTransaction();
             
-            st = (Student) session.get(Student.class,studentId);
+            st = (Subject) session.get(Subject.class,subjectId);
             
             trans.commit();
         }catch(Exception e){
@@ -46,13 +50,13 @@ public class StudentDAO {
         return st;
     }
     
-    public boolean deleteStudent(Student st){
+    public boolean deleteSubject(Subject sb){
         Transaction trans = null;
         try{
             Session session = HibernateUtil.getSessionFactory().openSession();
             trans = session.beginTransaction();
             
-            session.delete(st);
+            session.delete(sb);
             
             trans.commit();
             return true;
@@ -63,12 +67,12 @@ public class StudentDAO {
        
     }
     
-    public boolean saveStudent(Student st){
+    public boolean saveSubject(Subject sb){
         Transaction trans = null;
         try{
             Session session = HibernateUtil.getSessionFactory().openSession();
             trans = session.beginTransaction();
-            session.save(st);
+            session.save(sb);
             trans.commit();
             return true;
         }catch(Exception e){
@@ -77,35 +81,17 @@ public class StudentDAO {
         }
     }
     
-    public boolean updateStudent(Student st){
+    public boolean updateSubject(Subject sb){
         Transaction trans = null;
         try{
             Session session = HibernateUtil.getSessionFactory().openSession();
             trans = session.beginTransaction();
-            session.update(st);
+            session.update(sb);
             trans.commit();
             return true;
         }catch(Exception e){
             trans.rollback();
             return false;
         }
-    }
-    
-    public Student checkLogin(String studentId, String password){
-        
-        Transaction trans = null;
-        
-        try{
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        trans = session.beginTransaction();
-        
-        Student st = (Student)session.get(Student.class, studentId);
-        
-        if(st != null && st.getPassword().equals(password)){
-            return st;
-        }
-        }catch(Exception e){   
-        }
-        return null;
     }
 }
