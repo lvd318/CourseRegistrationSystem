@@ -57,9 +57,6 @@ public class Class  implements java.io.Serializable {
         this.totalFemales = totalFemales;
     }
 
-
-
-
 }
 
 

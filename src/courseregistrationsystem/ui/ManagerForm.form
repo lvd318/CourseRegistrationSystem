@@ -175,7 +175,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/courseregistrationsystem/icon/icon-48-dkhp.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xfd; &#x110;KHP"/>
+            <Property name="text" type="java.lang.String" value="Qu&#x1ea3;n l&#xfd; k&#xec; &#x110;KHP"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>

@@ -17,6 +17,7 @@ public class ManagerForm extends javax.swing.JFrame {
     private AccountManagementPanel mAccountPanel = null;
     private SubjectManagementPanel mSubjectPanel = null;
     private SemesterManagementPanel mSemesterPanel = null;
+    private ClassManagementPanel mClassPanel = null;
     public ManagerForm() {
         initComponents();
         setLocationRelativeTo(null);
@@ -151,7 +152,7 @@ public class ManagerForm extends javax.swing.JFrame {
         jToolBar1.add(btnManementClass);
 
         btnManementRegister.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/icon-48-dkhp.png"))); // NOI18N
-        btnManementRegister.setText("Quản lý ĐKHP");
+        btnManementRegister.setText("Quản lý kì ĐKHP");
         btnManementRegister.setFocusable(false);
         btnManementRegister.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnManementRegister.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -250,7 +251,11 @@ public class ManagerForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnChangePasswordActionPerformed
 
     private void btnManementClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManementClassActionPerformed
-        // TODO add your handling code here:
+        if (mClassPanel == null) {
+            mClassPanel = new ClassManagementPanel();
+            jTabbedPane1.add("Quản lý lớp học", mClassPanel);
+        }
+        jTabbedPane1.setSelectedComponent(mClassPanel);
     }//GEN-LAST:event_btnManementClassActionPerformed
 
     private void lbUsernamePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_lbUsernamePropertyChange
