@@ -13,9 +13,7 @@ import courseregistrationsystem.dao.SharedData;
  */
 public class StudentForm extends javax.swing.JFrame {
 
-    /**
-     * Creates new form StudentForm
-     */
+    InforStudentPanel inforStudentPanel = null;
     public StudentForm() {
         initComponents();
         
@@ -35,7 +33,7 @@ public class StudentForm extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         lbUsername = new javax.swing.JLabel();
         btnLogout = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnChangePassword = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         btnInforStudent = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
@@ -52,7 +50,6 @@ public class StudentForm extends javax.swing.JFrame {
         jToolBar1.setRollover(true);
 
         lbUsername.setForeground(new java.awt.Color(255, 0, 0));
-        lbUsername.setText("jLabel1");
         jToolBar1.add(lbUsername);
 
         btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/Login-icon-32.png"))); // NOI18N
@@ -67,21 +64,21 @@ public class StudentForm extends javax.swing.JFrame {
         });
         jToolBar1.add(btnLogout);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/gpa-icon-32.png"))); // NOI18N
-        jButton2.setText("Đổi mật khẩu");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnChangePassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/gpa-icon-32.png"))); // NOI18N
+        btnChangePassword.setText("Đổi mật khẩu");
+        btnChangePassword.setFocusable(false);
+        btnChangePassword.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnChangePassword.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnChangePassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnChangePasswordActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton2);
+        jToolBar1.add(btnChangePassword);
         jToolBar1.add(jSeparator1);
 
         btnInforStudent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/Person-Male-Light-icon-24.png"))); // NOI18N
-        btnInforStudent.setText("Quản lý tài khoản");
+        btnInforStudent.setText("Thông tin tài khoản");
         btnInforStudent.setFocusable(false);
         btnInforStudent.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnInforStudent.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -118,7 +115,7 @@ public class StudentForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
                     .addComponent(jTabbedPane1))
                 .addContainerGap())
         );
@@ -141,16 +138,17 @@ public class StudentForm extends javax.swing.JFrame {
         loginDialog.setVisible(true);
     }//GEN-LAST:event_btnLogoutActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangePasswordActionPerformed
+        ChangePasswordForm changePasswordForm = new ChangePasswordForm();
+        changePasswordForm.setVisible(true);
+    }//GEN-LAST:event_btnChangePasswordActionPerformed
 
     private void btnInforStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInforStudentActionPerformed
-//        if(mAccountPanel == null){
-//            mAccountPanel = new AccountManagementPanel();
-//            jTabbedPane1.add("Quản lý sinh viên",mAccountPanel);
-//        }
-//        jTabbedPane1.setSelectedComponent(mAccountPanel);
+        if(inforStudentPanel == null){
+            inforStudentPanel = new InforStudentPanel();
+            jTabbedPane1.add("Thông tin sinh viên",inforStudentPanel);
+        }
+        jTabbedPane1.setSelectedComponent(inforStudentPanel);
     }//GEN-LAST:event_btnInforStudentActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -197,9 +195,9 @@ public class StudentForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnChangePassword;
     private javax.swing.JButton btnInforStudent;
     private javax.swing.JButton btnLogout;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton8;
     private javax.swing.JToolBar.Separator jSeparator1;
