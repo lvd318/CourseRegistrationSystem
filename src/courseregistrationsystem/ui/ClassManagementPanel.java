@@ -21,6 +21,7 @@ public class ClassManagementPanel extends javax.swing.JPanel {
      */
     public ClassManagementPanel() {
         initComponents();
+        LoadData();
     }
     
     /**
@@ -39,7 +40,6 @@ public class ClassManagementPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnDelete = new javax.swing.JButton();
-        btnUpdate = new javax.swing.JButton();
         txtTotal = new javax.swing.JTextField();
         txtTotalMales = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -84,14 +84,6 @@ public class ClassManagementPanel extends javax.swing.JPanel {
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteActionPerformed(evt);
-            }
-        });
-
-        btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/Actions-document-edit-icon-16.png"))); // NOI18N
-        btnUpdate.setText("Cập nhật");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
             }
         });
 
@@ -152,11 +144,10 @@ public class ClassManagementPanel extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnNew)
-                        .addGap(26, 26, 26)
+                        .addGap(35, 35, 35)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(btnUpdate)
-                            .addComponent(btnSave)
-                            .addComponent(btnDelete)))
+                            .addComponent(btnDelete)
+                            .addComponent(btnSave)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
@@ -194,11 +185,9 @@ public class ClassManagementPanel extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNew)
                     .addComponent(btnSave))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnUpdate)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnDelete)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -308,27 +297,6 @@ public class ClassManagementPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        if(validateForm()){
-            ClassDAO stdao = new ClassDAO();
-            Class st = new Class();
-            st.setClassId(this.txtClassId.getText());
-            st.setTotal(Integer.parseInt(txtTotal.getText()));
-            st.setTotalMales(Integer.parseInt(txtTotalMales.getText()));
-            st.setTotalFemales(Integer.parseInt(txtTotalFemales.getText()));
-            if(stdao.updateClass(st)){
-                JOptionPane.showMessageDialog(null, "Lớp học đã được cập nhật");
-                LoadData();
-            }
-            else {
-                JOptionPane.showMessageDialog(null, "Cập nhật thất bại");
-            }
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Nhập đầy đủ thông tin để cập nhật");
-        }
-    }//GEN-LAST:event_btnUpdateActionPerformed
-
     private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTotalActionPerformed
@@ -350,11 +318,11 @@ public class ClassManagementPanel extends javax.swing.JPanel {
             sb.setTotalMales(Integer.parseInt(txtTotalMales.getText()));
             sb.setTotalFemales(Integer.parseInt(txtTotalFemales.getText()));
             if(sbdao.saveClass(sb)){
-                JOptionPane.showMessageDialog(null, "Thêm 1 môn học thành công");
+                JOptionPane.showMessageDialog(null, "Thêm 1 lớp học thành công");
                 LoadData();
             }
             else {
-                JOptionPane.showMessageDialog(null, "Thêm môn học thất bại");
+                JOptionPane.showMessageDialog(null, "Thêm lớp học thất bại");
             }
         }
         else{
@@ -379,7 +347,6 @@ public class ClassManagementPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

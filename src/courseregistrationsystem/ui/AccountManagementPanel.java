@@ -402,7 +402,7 @@ public class AccountManagementPanel extends javax.swing.JPanel {
             Account acc = ad.findAccount(username);
 
             txtUsername.setText(acc.getUsername());
-            txtPassword.setText(acc.getUsername());
+            txtPassword.setText(acc.getPassword());
             txtHoten.setText(acc.getHoten());
         }catch(Exception e){
         }

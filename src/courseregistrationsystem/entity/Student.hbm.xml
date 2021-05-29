@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated May 18, 2021 7:59:37 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="courseregistrationsystem.entity.Student" table="student" catalog="qldkmh" optimistic-lock="version">
+    <class name="courseregistrationsystem.entity.Student" table="student" catalog="courseregistration" optimistic-lock="version">
         <id name="studentId" type="string">
             <column name="student_id" length="10" />
             <generator class="assigned" />

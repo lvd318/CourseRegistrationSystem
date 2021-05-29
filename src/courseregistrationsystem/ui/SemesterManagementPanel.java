@@ -68,7 +68,7 @@ public class SemesterManagementPanel extends javax.swing.JPanel {
                 java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -316,7 +316,10 @@ public class SemesterManagementPanel extends javax.swing.JPanel {
         Semester st = std.findSemester(semesterId);
         txtSemesterName.setText(st.getId().getSemName());
         txtYear.setText(String.valueOf(st.getId().getYear()));
-        
+        if(st.isCurrentSem()){
+            rbtnSemCurrent.setSelected(true);
+        }
+        else rbtnSemCurrent.setSelected(false);
         //SimpleDateFormat fm = new SimpleDateFormat("MM/dd/yyyy");
         try {
         Date Startdate = fm.parse(fm.format(st.getStartDay()));
@@ -362,6 +365,16 @@ public class SemesterManagementPanel extends javax.swing.JPanel {
             } 
             
             st.setCurrentSem(rbtnSemCurrent.isSelected());
+            
+            for(Semester t : stdao.findAll()){
+                if (t.isCurrentSem()){
+                    if(st.isCurrentSem()){
+                        t.setCurrentSem(false);
+                        stdao.updateSemester(t);
+                    }
+                }
+            }
+            
             if(stdao.updateSemester(st)){
                 JOptionPane.showMessageDialog(null, "Học kì đã được cập nhật");
                 LoadData();
@@ -387,10 +400,6 @@ public class SemesterManagementPanel extends javax.swing.JPanel {
         if(validateForm()){
             SemesterDAO sbdao = new SemesterDAO();
             Semester st = new Semester();
-            //SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy");
-            
-            //semesterId.setSemName(txtSemesterName.getText());
-            //semesterId.setYear(Integer.parseInt(txtYear.getText()));
             
             st.setId(new SemesterId(txtSemesterName.getText(),Integer.parseInt(txtYear.getText())));
             
@@ -402,6 +411,14 @@ public class SemesterManagementPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, e);
             } 
             st.setCurrentSem(rbtnSemCurrent.isSelected());
+            for(Semester t : sbdao.findAll()){
+                if (t.isCurrentSem()){
+                    if(st.isCurrentSem()){
+                        t.setCurrentSem(false);
+                        sbdao.updateSemester(t);
+                    }
+                }
+            }
             
             if(sbdao.saveSemester(st)){
                 JOptionPane.showMessageDialog(null, "Thêm 1 học kì thành công");

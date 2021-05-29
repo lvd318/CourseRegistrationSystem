@@ -18,6 +18,8 @@ public class ManagerForm extends javax.swing.JFrame {
     private SubjectManagementPanel mSubjectPanel = null;
     private SemesterManagementPanel mSemesterPanel = null;
     private ClassManagementPanel mClassPanel = null;
+    private SessionManagementPanel mSessionPanel = null;
+    private CourseManagementPanel mCoursePanel = null;
     public ManagerForm() {
         initComponents();
         setLocationRelativeTo(null);
@@ -59,6 +61,7 @@ public class ManagerForm extends javax.swing.JFrame {
         jToolBar1.setRollover(true);
 
         lbUsername.setForeground(new java.awt.Color(255, 0, 0));
+        lbUsername.setText("giaovu");
         lbUsername.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 lbUsernamePropertyChange(evt);
@@ -168,6 +171,11 @@ public class ManagerForm extends javax.swing.JFrame {
         btnManementCourse.setFocusable(false);
         btnManementCourse.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnManementCourse.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnManementCourse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManementCourseActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnManementCourse);
 
         btnOverview.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/Actions-view-choose-icon-24.png"))); // NOI18N
@@ -189,8 +197,8 @@ public class ManagerForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 808, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane1))
+                    .addComponent(jTabbedPane1)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -199,7 +207,7 @@ public class ManagerForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -237,7 +245,11 @@ public class ManagerForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnManementSemesterActionPerformed
 
     private void btnManementRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManementRegisterActionPerformed
-        // TODO add your handling code here:
+        if(mSessionPanel == null){
+            mSessionPanel = new SessionManagementPanel();
+            jTabbedPane1.add("Quản lý kì đăng kí",mSessionPanel);
+        }
+        jTabbedPane1.setSelectedComponent(mSessionPanel);
     }//GEN-LAST:event_btnManementRegisterActionPerformed
 
     private void btnOverviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOverviewActionPerformed
@@ -273,6 +285,15 @@ public class ManagerForm extends javax.swing.JFrame {
         }
         jTabbedPane1.setSelectedComponent(mSubjectPanel);
     }//GEN-LAST:event_btnManementSubjectActionPerformed
+
+    private void btnManementCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManementCourseActionPerformed
+        if(mCoursePanel == null){
+            mCoursePanel = new CourseManagementPanel();
+            jTabbedPane1.add("Quản lý học phần",mCoursePanel);
+        }
+        jTabbedPane1.setSelectedComponent(mCoursePanel);
+        mCoursePanel.LoadData();
+    }//GEN-LAST:event_btnManementCourseActionPerformed
 
     /**
      * @param args the command line arguments
