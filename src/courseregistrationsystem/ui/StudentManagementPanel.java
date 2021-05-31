@@ -7,6 +7,10 @@ package courseregistrationsystem.ui;
 
 import courseregistrationsystem.dao.*;
 import courseregistrationsystem.entity.*;
+import courseregistrationsystem.entity.Class;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,19 +19,28 @@ public class StudentManagementPanel extends javax.swing.JPanel {
 //    private final StudentDAO std = new StudentDAO();
     public StudentManagementPanel() {
         initComponents();
-        LoadData();
+        LoadData("Tất cả");
     }
     
-    private void LoadData(){
+    public void LoadData(String choose){
         StudentDAO std = new StudentDAO();
+        ClassDAO cdao = new ClassDAO();
         DefaultTableModel dtm = new DefaultTableModel();
         dtm.addColumn("Mã SV");
         dtm.addColumn("Họ Tên");
         dtm.addColumn("Lớp");
         dtm.addColumn("Giới tính");
         dtm.addColumn("Số đt");
-        for(Student st : std.findAll()){
-            dtm.addRow(new Object[]{st.getStudentId(), st.getName(), st.getClassId(), st.getSex(), st.getTelephone()});
+
+        if(choose.equals("Tất cả")){
+            for(Student st : std.findAll()){
+                dtm.addRow(new Object[]{st.getStudentId(), st.getName(), st.getClassId(), st.getSex(), st.getTelephone()});
+            }
+        }
+        else{
+            for(Student s : std.findAllByClassId(choose)){
+                dtm.addRow(new Object[]{s.getStudentId(), s.getName(), s.getClassId(), s.getSex(), s.getTelephone()});
+            }
         }
         this.tblStudents.setModel(dtm);
     }
@@ -46,7 +59,7 @@ public class StudentManagementPanel extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<String>();
+        jComboBoxChoosedClass = new javax.swing.JComboBox<String>();
         jPanel1 = new javax.swing.JPanel();
         btnDelete = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
@@ -65,6 +78,12 @@ public class StudentManagementPanel extends javax.swing.JPanel {
         btnSave = new javax.swing.JButton();
         btnFind = new javax.swing.JButton();
         btnNew = new javax.swing.JButton();
+
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         tblStudents.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -99,10 +118,15 @@ public class StudentManagementPanel extends javax.swing.JPanel {
 
         jLabel2.setText("Lớp:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxChoosedClass.setToolTipText("");
+        jComboBoxChoosedClass.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxChoosedClassItemStateChanged(evt);
+            }
+        });
+        jComboBoxChoosedClass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                jComboBoxChoosedClassActionPerformed(evt);
             }
         });
 
@@ -278,7 +302,7 @@ public class StudentManagementPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDelete))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                         .addComponent(btnResetPassword)))
                 .addContainerGap())
         );
@@ -292,43 +316,43 @@ public class StudentManagementPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 251, Short.MAX_VALUE)
+                        .addGap(0, 296, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jComboBoxChoosedClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(364, 364, 364))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
+                        .addGap(14, 14, 14))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(289, 289, 289)
+                .addGap(298, 298, 298)
                 .addComponent(jLabel1)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(10, 10, 10)
                 .addComponent(jLabel1)
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jComboBoxChoosedClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void jComboBoxChoosedClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxChoosedClassActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_jComboBoxChoosedClassActionPerformed
 
     private void txtStudentIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStudentIdActionPerformed
         // TODO add your handling code here:
@@ -360,16 +384,35 @@ public class StudentManagementPanel extends javax.swing.JPanel {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         if(validateForm()){
             StudentDAO stdao = new StudentDAO();
+            ClassDAO csdao = new ClassDAO();
             Student st = new Student();
+            Class cs = new Class();
             st.setStudentId(this.txtStudentId.getText());
             st.setName(this.txtStudentName.getText());
             st.setClassId(this.txtClass.getText());
             st.setPassword(st.getStudentId());
             st.setTelephone(this.txtTelephone.getText());
             st.setSex(rdbMale.isSelected() ? "Nam" : "Nữ");
+            
+            if (csdao.findClass(txtClass.getText()) == null){
+                JOptionPane.showMessageDialog(null, "Lớp " + txtClass.getText() + " không tồn tại");
+                return;
+            }
             if(stdao.saveStudent(st)){
                 JOptionPane.showMessageDialog(null, "Thêm 1 sinh viên thành công");
-                LoadData();
+                LoadData(st.getClassId());
+                jComboBoxChoosedClass.setSelectedItem(st.getClassId());
+                
+                //Update total student in class
+                cs = csdao.findClass(st.getClassId());
+                cs.setTotal(cs.getTotal() + 1);
+                if(st.getSex().equals("Nam")){
+                    cs.setTotalMales(cs.getTotalMales() + 1 );
+                }
+                else{
+                    cs.setTotalFemales(cs.getTotalFemales() + 1 );
+                }
+                csdao.updateClass(cs);
             }
             else {
                 JOptionPane.showMessageDialog(null, "Thêm sinh viên thất bại");
@@ -422,7 +465,6 @@ public class StudentManagementPanel extends javax.swing.JPanel {
         txtStudentName.setText("");
         txtTelephone.setText("");
         buttonGroup1.clearSelection();
-        LoadData();
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnResetPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetPasswordActionPerformed
@@ -433,7 +475,7 @@ public class StudentManagementPanel extends javax.swing.JPanel {
                 
             if(std.updateStudent(st)){
                 JOptionPane.showMessageDialog(null, "Khởi tạo mật khẩu mặc định");
-                LoadData();
+                LoadData(jComboBoxChoosedClass.getSelectedItem().toString());
             }
             else {
                 JOptionPane.showMessageDialog(null, "Khởi tạo thất bại");
@@ -453,7 +495,7 @@ public class StudentManagementPanel extends javax.swing.JPanel {
             st.setSex(rdbMale.isSelected() ? "Nam" : "Nữ");
             if(stdao.updateStudent(st)){
                 JOptionPane.showMessageDialog(null, "Sinh viên đã được cập nhật");
-                LoadData();
+                LoadData(jComboBoxChoosedClass.getSelectedItem().toString());
             }
             else {
                 JOptionPane.showMessageDialog(null, "Cập nhật thất bại");
@@ -486,11 +528,23 @@ public class StudentManagementPanel extends javax.swing.JPanel {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         if(!txtStudentId.getText().isEmpty()){
             StudentDAO std = new StudentDAO();
+            ClassDAO csdao = new ClassDAO();
+            Class cs = new Class();
             Student st = std.findStudent(txtStudentId.getText());
                 
             if(std.deleteStudent(st)){
                 JOptionPane.showMessageDialog(null, "Xóa sinh viên thành công");
-                LoadData();
+                LoadData(jComboBoxChoosedClass.getSelectedItem().toString());
+                
+                cs = csdao.findClass(st.getClassId());
+                cs.setTotal(cs.getTotal() - 1);
+                if(st.getSex().equals("Nam")){
+                    cs.setTotalMales(cs.getTotalMales() - 1 );
+                }
+                else{
+                    cs.setTotalFemales(cs.getTotalFemales() - 1 );
+                }
+                csdao.updateClass(cs);
             }
             else {
                 JOptionPane.showMessageDialog(null, "Xóa thất bại");
@@ -499,6 +553,21 @@ public class StudentManagementPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập mã SV cần xóa");
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        ClassDAO cdao = new ClassDAO();
+        
+        DefaultComboBoxModel  model = new DefaultComboBoxModel ();
+        model.addElement("Tất cả");
+        for(Class cs : cdao.findAll()){
+            model.addElement(cs.getClassId());
+        }
+        jComboBoxChoosedClass.setModel(model);
+    }//GEN-LAST:event_formComponentShown
+
+    private void jComboBoxChoosedClassItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxChoosedClassItemStateChanged
+        LoadData(jComboBoxChoosedClass.getSelectedItem().toString());
+    }//GEN-LAST:event_jComboBoxChoosedClassItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -509,7 +578,7 @@ public class StudentManagementPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUpdate;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBoxChoosedClass;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

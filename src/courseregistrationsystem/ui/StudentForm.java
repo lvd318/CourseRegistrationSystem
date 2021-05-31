@@ -5,7 +5,18 @@
  */
 package courseregistrationsystem.ui;
 
+import courseregistrationsystem.dao.RegisterSessionDAO;
+import courseregistrationsystem.dao.SemesterDAO;
 import courseregistrationsystem.dao.SharedData;
+import courseregistrationsystem.entity.RegisterSession;
+import courseregistrationsystem.entity.Semester;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,7 +24,9 @@ import courseregistrationsystem.dao.SharedData;
  */
 public class StudentForm extends javax.swing.JFrame {
 
-    InforStudentPanel inforStudentPanel = null;
+    private InforStudentPanel inforStudentPanel = null;
+    private CourseRegistrationJPanel courseRegistrationPanel = null;
+    private ResultRegisCoursePanel resultRegisCoursePanel = null;
     public StudentForm() {
         initComponents();
         
@@ -36,8 +49,8 @@ public class StudentForm extends javax.swing.JFrame {
         btnChangePassword = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         btnInforStudent = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnCourseRegistration = new javax.swing.JButton();
+        btnResult = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hệ thống đăng kí học phần");
@@ -89,24 +102,29 @@ public class StudentForm extends javax.swing.JFrame {
         });
         jToolBar1.add(btnInforStudent);
 
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/icon-48-dkhp.png"))); // NOI18N
-        jButton8.setText("Đăng kí học phần");
-        jButton8.setFocusable(false);
-        jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        btnCourseRegistration.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/icon-48-dkhp.png"))); // NOI18N
+        btnCourseRegistration.setText("Đăng kí học phần");
+        btnCourseRegistration.setFocusable(false);
+        btnCourseRegistration.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnCourseRegistration.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnCourseRegistration.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                btnCourseRegistrationActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton8);
+        jToolBar1.add(btnCourseRegistration);
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/Actions-document-edit-icon-24.png"))); // NOI18N
-        jButton5.setText("Xem kết quả");
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton5);
+        btnResult.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/Actions-document-edit-icon-24.png"))); // NOI18N
+        btnResult.setText("Xem kết quả");
+        btnResult.setFocusable(false);
+        btnResult.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnResult.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnResult.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResultActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnResult);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,7 +133,7 @@ public class StudentForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 786, Short.MAX_VALUE)
                     .addComponent(jTabbedPane1))
                 .addContainerGap())
         );
@@ -150,14 +168,63 @@ public class StudentForm extends javax.swing.JFrame {
         }
         jTabbedPane1.setSelectedComponent(inforStudentPanel);
     }//GEN-LAST:event_btnInforStudentActionPerformed
+    
+    private boolean checkTime(){
+        //RegisterSession registerSesssion = new RegisterSession();
+        SimpleDateFormat fm = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+        LocalDateTime current = LocalDateTime.now();
+        SemesterDAO sdao = new SemesterDAO();
+        RegisterSessionDAO rsdao = new RegisterSessionDAO();
+        Semester semesterCurrent = null;
+        for(Semester t : sdao.findAll()){
+            if (t.isCurrentSem()) {
+                semesterCurrent = t;
+            }
+        }
+        try {
+            Date currentTime = fm.parse(fm.format(java.sql.Timestamp.valueOf(current)));
+            
+            for(RegisterSession registerSession : rsdao.findAll()){
+                if(registerSession.getSemNameFk().equals(semesterCurrent.getId().getSemName())
+                    && (registerSession.getYearFk() == semesterCurrent.getId().getYear()) ){
+                    
+                    if( (currentTime.compareTo(registerSession.getEndDay()) < 0 ) && 
+                                    (currentTime.compareTo(registerSession.getStartDay()) > 0) ){
+                        return true;
+                    }
+                }
+            }
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+        } catch (ParseException ex) {
+            Logger.getLogger(StudentForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return false;
+    }
+    private void btnCourseRegistrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCourseRegistrationActionPerformed
+        if (checkTime()) {
+            if (courseRegistrationPanel == null) {
+                courseRegistrationPanel = new CourseRegistrationJPanel();
+                jTabbedPane1.add("Đăng kí học phần", courseRegistrationPanel);
+            }
+            jTabbedPane1.setSelectedComponent(courseRegistrationPanel);
+        } else {
+            JOptionPane.showMessageDialog(null, "Hiện không phải thời gian đăng kí");
+        }
+    }//GEN-LAST:event_btnCourseRegistrationActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         lbUsername.setText(SharedData.student.getStudentId());
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnResultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResultActionPerformed
+        if(resultRegisCoursePanel == null){
+            resultRegisCoursePanel = new ResultRegisCoursePanel();
+            jTabbedPane1.add("Xem kết quả",resultRegisCoursePanel);
+        }
+        jTabbedPane1.setSelectedComponent(resultRegisCoursePanel);
+        resultRegisCoursePanel.LoadData();
+    }//GEN-LAST:event_btnResultActionPerformed
 
     /**
      * @param args the command line arguments
@@ -196,10 +263,10 @@ public class StudentForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChangePassword;
+    private javax.swing.JButton btnCourseRegistration;
     private javax.swing.JButton btnInforStudent;
     private javax.swing.JButton btnLogout;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton8;
+    private javax.swing.JButton btnResult;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JToolBar jToolBar1;

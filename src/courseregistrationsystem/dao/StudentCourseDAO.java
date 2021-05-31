@@ -5,43 +5,61 @@
  */
 package courseregistrationsystem.dao;
 
-import courseregistrationsystem.entity.Account;
+import courseregistrationsystem.entity.*;
 import java.util.*;
 import org.hibernate.*;
 
-public class AccountDAO {
-     public List<Account> findAll(){
+public class StudentCourseDAO {
+    public List<StudentCourse> findAll(){
         try{
             Session session = HibernateUtil.getSessionFactory().openSession();
-            return session.createCriteria(Account.class).list();
+            return session.createCriteria(StudentCourse.class).list();
         }catch(Exception ex){
             return null;
         }
     }
-     
-    public Account findAccount(String username){
+    
+    
+    public StudentCourse findStudentCourse(StudentCourseId studentCourseId){
         Transaction trans = null;
-        Account acc = null;
+        StudentCourse st = null;
         try{
             Session session = HibernateUtil.getSessionFactory().openSession();
             trans = session.beginTransaction();
-   
-            acc = (Account) session.get(Account.class,username);
+            
+            st = (StudentCourse) session.get(StudentCourse.class,studentCourseId);
             
             trans.commit();
         }catch(Exception e){
             trans.rollback();
         }
         
-        return acc;
+        return st;
     }
     
-    public boolean saveAccount(Account acc){
+    public boolean deleteStudentCourse(StudentCourse sb){
         Transaction trans = null;
         try{
             Session session = HibernateUtil.getSessionFactory().openSession();
             trans = session.beginTransaction();
-            session.save(acc);
+            
+            session.delete(sb);
+            
+            trans.commit();
+            return true;
+        }catch(Exception e){
+            trans.rollback();
+            return false;
+        }
+       
+    }
+    
+    public boolean saveStudentCourse(StudentCourse sb){
+        Transaction trans = null;
+        try{
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            trans = session.beginTransaction();
+            session.save(sb);
             trans.commit();
             return true;
         }catch(Exception e){
@@ -50,12 +68,12 @@ public class AccountDAO {
         }
     }
     
-    public boolean updateAccount(Account acc){
+    public boolean updateStudentCourse(StudentCourse sb){
         Transaction trans = null;
         try{
             Session session = HibernateUtil.getSessionFactory().openSession();
             trans = session.beginTransaction();
-            session.update(acc);
+            session.update(sb);
             trans.commit();
             return true;
         }catch(Exception e){
@@ -63,39 +81,4 @@ public class AccountDAO {
             return false;
         }
     }
-    
-    public boolean deleteAccount(Account acc){
-        Transaction trans = null;
-        try{
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            trans = session.beginTransaction();
-            
-            session.delete(acc);
-            
-            trans.commit();
-            return true;
-        }catch(Exception e){
-            trans.rollback();
-            return false;
-        }
-    }
-    
-    public Account checkLogin(String username, String password){
-        
-        Transaction trans = null;
-        
-        try{
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            trans = session.beginTransaction();
-
-            Account acc = (Account)session.get(Account.class, username);
-
-            if(acc != null && acc.getPassword().equals(password)){
-                return acc;
-            }
-        }catch(Exception e){   
-        }
-        return null;
-    }
-    
 }

@@ -94,6 +94,12 @@ public class CourseManagementPanel extends javax.swing.JPanel {
         });
         jScrollPane3.setViewportView(tblCourses);
         tblCourses.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        if (tblCourses.getColumnModel().getColumnCount() > 0) {
+            tblCourses.getColumnModel().getColumn(0).setPreferredWidth(25);
+            tblCourses.getColumnModel().getColumn(2).setPreferredWidth(150);
+            tblCourses.getColumnModel().getColumn(6).setPreferredWidth(25);
+            tblCourses.getColumnModel().getColumn(7).setPreferredWidth(25);
+        }
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 0));
@@ -480,8 +486,6 @@ public class CourseManagementPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnFind;
-    private javax.swing.JButton btnFind1;
     private javax.swing.JButton btnFind2;
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnSave;

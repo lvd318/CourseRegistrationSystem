@@ -20,6 +20,7 @@ public class ManagerForm extends javax.swing.JFrame {
     private ClassManagementPanel mClassPanel = null;
     private SessionManagementPanel mSessionPanel = null;
     private CourseManagementPanel mCoursePanel = null;
+    private OverviewPanel overViewPanel = null;
     public ManagerForm() {
         initComponents();
         setLocationRelativeTo(null);
@@ -197,8 +198,8 @@ public class ManagerForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -226,6 +227,7 @@ public class ManagerForm extends javax.swing.JFrame {
             jTabbedPane1.add("Quản lý tài khoản",mAccountPanel);
         }
         jTabbedPane1.setSelectedComponent(mAccountPanel);
+        mAccountPanel.LoadData();
     }//GEN-LAST:event_btnManementAccountActionPerformed
 
     private void btnManementStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManementStudentActionPerformed
@@ -234,6 +236,7 @@ public class ManagerForm extends javax.swing.JFrame {
             jTabbedPane1.add("Quản lý sinh viên",mStudentPanel);
         }
         jTabbedPane1.setSelectedComponent(mStudentPanel);
+        mStudentPanel.LoadData("Tất cả");
     }//GEN-LAST:event_btnManementStudentActionPerformed
 
     private void btnManementSemesterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManementSemesterActionPerformed
@@ -241,7 +244,8 @@ public class ManagerForm extends javax.swing.JFrame {
             mSemesterPanel = new SemesterManagementPanel();
             jTabbedPane1.add("Quản lý học kì",mSemesterPanel);
         }
-        jTabbedPane1.setSelectedComponent(mSemesterPanel);        
+        jTabbedPane1.setSelectedComponent(mSemesterPanel);     
+        mSemesterPanel.LoadData();
     }//GEN-LAST:event_btnManementSemesterActionPerformed
 
     private void btnManementRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManementRegisterActionPerformed
@@ -250,10 +254,17 @@ public class ManagerForm extends javax.swing.JFrame {
             jTabbedPane1.add("Quản lý kì đăng kí",mSessionPanel);
         }
         jTabbedPane1.setSelectedComponent(mSessionPanel);
+        mSessionPanel.LoadData();
     }//GEN-LAST:event_btnManementRegisterActionPerformed
 
     private void btnOverviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOverviewActionPerformed
-        // TODO add your handling code here:
+        // overViewPanel
+        if(overViewPanel == null){
+            overViewPanel = new OverviewPanel();
+            jTabbedPane1.add("Tổng quan",overViewPanel);
+        }
+        jTabbedPane1.setSelectedComponent(overViewPanel);
+        //mSessionPanel.LoadData();
     }//GEN-LAST:event_btnOverviewActionPerformed
 
     private void btnChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangePasswordActionPerformed
@@ -268,6 +279,7 @@ public class ManagerForm extends javax.swing.JFrame {
             jTabbedPane1.add("Quản lý lớp học", mClassPanel);
         }
         jTabbedPane1.setSelectedComponent(mClassPanel);
+        mClassPanel.LoadData();
     }//GEN-LAST:event_btnManementClassActionPerformed
 
     private void lbUsernamePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_lbUsernamePropertyChange
@@ -284,6 +296,7 @@ public class ManagerForm extends javax.swing.JFrame {
             jTabbedPane1.add("Quản lý môn học",mSubjectPanel);
         }
         jTabbedPane1.setSelectedComponent(mSubjectPanel);
+        mSubjectPanel.LoadData();
     }//GEN-LAST:event_btnManementSubjectActionPerformed
 
     private void btnManementCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManementCourseActionPerformed
