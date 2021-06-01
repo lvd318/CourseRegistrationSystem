@@ -224,7 +224,6 @@ public class InforStudentPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-
         StudentDAO stdao = new StudentDAO();
         Student st = new Student();
         st.setStudentId(this.txtStudentId.getText());

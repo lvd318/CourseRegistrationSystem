@@ -383,6 +383,7 @@ public class StudentManagementPanel extends javax.swing.JPanel {
             model.addElement(cs.getClassId());
         }
         jComboBoxChoosedClass.setModel(model);
+        LoadData("Tất cả");
     }//GEN-LAST:event_formComponentShown
 
     private void jComboBoxChoosedClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxChoosedClassActionPerformed
