@@ -55,6 +55,12 @@ public class CourseRegistrationJPanel extends javax.swing.JPanel {
         btnRegistrateCourse = new javax.swing.JButton();
         btnDeleteCourse = new javax.swing.JButton();
 
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
+
         tblCourses.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -243,9 +249,11 @@ public class CourseRegistrationJPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Đăng kí thành công");
             }else{
                   JOptionPane.showMessageDialog(null, "Tồn tại 2 môn trùng giờ học");
+                  LoadData();
                     }
         }else{
             JOptionPane.showMessageDialog(null, "Đăng kí tối đa 8 môn");
+            LoadData();
         }
     }//GEN-LAST:event_btnRegistrateCourseActionPerformed
 
@@ -259,6 +267,10 @@ public class CourseRegistrationJPanel extends javax.swing.JPanel {
             LoadData();
         }
     }//GEN-LAST:event_btnDeleteCourseActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        LoadData();
+    }//GEN-LAST:event_formComponentShown
     
     private boolean checkRegistered(int courseId){
         StudentCourseDAO dao = new StudentCourseDAO();
@@ -287,7 +299,7 @@ public class CourseRegistrationJPanel extends javax.swing.JPanel {
             if(st.getSemName().toString().equals(semesterCurrent.getId().getSemName()) && 
                     (st.getYear() == semesterCurrent.getId().getYear())){
                 dtm.addRow(new Object[]{st.getCourseId(), st.getSubjectId(), st.getSubjectName(), st.getCredits(), st.getGvlt(),
-                        st.getRoom(), st.getThu(), st.getCa(), st.getSlots(),checkRegistered(st.getCourseId())});
+                        st.getRoom(), st.getThu(), st.getCa(), st.getSlots(),checkRegistered(st.getCourseId()) ? true:false});
             }
         }
     }

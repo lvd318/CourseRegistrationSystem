@@ -53,7 +53,6 @@ public class CourseManagementPanel extends javax.swing.JPanel {
         btnNew = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        btnFind2 = new javax.swing.JButton();
         txtRoom = new javax.swing.JTextField();
         txtDay = new javax.swing.JTextField();
         txtCa = new javax.swing.JTextField();
@@ -152,14 +151,6 @@ public class CourseManagementPanel extends javax.swing.JPanel {
 
         jLabel7.setText("Ca học:");
 
-        btnFind2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/courseregistrationsystem/icon/search-icon-16.png"))); // NOI18N
-        btnFind2.setText("Tìm kiếm");
-        btnFind2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFind2ActionPerformed(evt);
-            }
-        });
-
         txtRoom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtRoomActionPerformed(evt);
@@ -194,9 +185,7 @@ public class CourseManagementPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnFind2, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                        .addComponent(btnNew)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(btnDelete)
@@ -252,9 +241,7 @@ public class CourseManagementPanel extends javax.swing.JPanel {
                     .addComponent(btnNew)
                     .addComponent(btnSave))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnFind2)
-                    .addComponent(btnDelete))
+                .addComponent(btnDelete)
                 .addGap(42, 42, 42))
         );
 
@@ -459,10 +446,6 @@ public class CourseManagementPanel extends javax.swing.JPanel {
         LoadData();
     }//GEN-LAST:event_btnNewActionPerformed
 
-    private void btnFind2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind2ActionPerformed
-        
-    }//GEN-LAST:event_btnFind2ActionPerformed
-
     private void txtRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRoomActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtRoomActionPerformed
@@ -486,7 +469,6 @@ public class CourseManagementPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnFind2;
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnSave;
     private javax.swing.JLabel jLabel1;
