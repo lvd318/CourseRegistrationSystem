@@ -5,10 +5,14 @@
  */
 package courseregistrationsystem.ui;
 
-/**
- *
- * @author dinhp
- */
+import courseregistrationsystem.dao.*;
+import courseregistrationsystem.entity.Course;
+import courseregistrationsystem.entity.Semester;
+import courseregistrationsystem.entity.Student;
+import courseregistrationsystem.entity.StudentCourse;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+
 public class OverviewPanel extends javax.swing.JPanel {
 
     /**
@@ -16,8 +20,39 @@ public class OverviewPanel extends javax.swing.JPanel {
      */
     public OverviewPanel() {
         initComponents();
+        LoadData("Tất cả");
     }
+    
+    public void LoadData(String choose){
+        StudentCourseDAO scdao = new StudentCourseDAO();
+        StudentDAO stdao = new StudentDAO();
+        CourseDAO cdao = new CourseDAO();
+        DefaultTableModel dtm = (DefaultTableModel) tblCourses.getModel();
+        dtm.setNumRows(0);
 
+        if(choose.equals("Tất cả")){
+            for(StudentCourse sc : scdao.findAll()){
+                Student st = stdao.findStudent(sc.getId().getStudentId());
+                Course course = cdao.findCourse(sc.getId().getCourseId());
+                dtm.addRow(new Object[]{st.getStudentId(), st.getName(), course.getSubjectId(), course.getSubjectName(),
+                    course.getGvlt(), ("T" + course.getThu() + "(" + course.getCa()+")"), sc.getRegisTime()});
+            }
+        }
+        else{
+            String[] s = choose.split("-");
+            int courseId = Integer.parseInt(s[0]);
+            
+            for(StudentCourse sc : scdao.findAll()){
+                if(sc.getId().getCourseId() == courseId){
+                    Student st = stdao.findStudent(sc.getId().getStudentId());
+                    Course course = cdao.findCourse(sc.getId().getCourseId());
+                    dtm.addRow(new Object[]{st.getStudentId(), st.getName(), course.getSubjectId(), course.getSubjectName(),
+                        course.getGvlt(), ("T" + course.getThu() + "(" + course.getCa()+")"), sc.getRegisTime()});
+                }
+            }
+        }
+        this.tblCourses.setModel(dtm);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,19 +62,147 @@ public class OverviewPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblCourses = new javax.swing.JTable();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
+
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
+
+        jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        tblCourses.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "MSSV", "Họ tên", "Mã môn", "Tên môn", "GVLT", "Thời gian học", "Thời gian đăng kí"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblCourses.setColumnSelectionAllowed(true);
+        jScrollPane3.setViewportView(tblCourses);
+        tblCourses.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        if (tblCourses.getColumnModel().getColumnCount() > 0) {
+            tblCourses.getColumnModel().getColumn(0).setPreferredWidth(30);
+            tblCourses.getColumnModel().getColumn(2).setPreferredWidth(50);
+        }
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Danh sách sinh viên đăng kí học phần");
+
+        jLabel2.setText("Học phần:");
+
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, 821, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jSeparator1))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(297, 297, 297))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        DefaultComboBoxModel  model = new DefaultComboBoxModel ();
+        model.addElement("Tất cả");
+        
+        SemesterDAO sdao = new SemesterDAO();
+        Semester semesterCurrent = null;
+        CourseDAO cdao = new CourseDAO();
+        for(Semester t : sdao.findAll()){
+                    if (t.isCurrentSem()){
+                        semesterCurrent = t;
+                    }
+                }
+        
+        for(Course st : cdao.findAll()){
+            if(st.getSemName().toString().equals(semesterCurrent.getId().getSemName()) && 
+                    (st.getYear() == semesterCurrent.getId().getYear())){
+                model.addElement(st.getCourseId() + "- " + st.getSubjectName());
+            }
+        }
+//        for(Class cs : cdao.findAll()){
+//            model.addElement(cs.getClassId());
+//        }
+        jComboBox1.setModel(model);
+    }//GEN-LAST:event_formComponentShown
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        LoadData(jComboBox1.getSelectedItem().toString());
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTable tblCourses;
     // End of variables declaration//GEN-END:variables
 }

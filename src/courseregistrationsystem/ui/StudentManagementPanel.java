@@ -25,12 +25,8 @@ public class StudentManagementPanel extends javax.swing.JPanel {
     public void LoadData(String choose){
         StudentDAO std = new StudentDAO();
         ClassDAO cdao = new ClassDAO();
-        DefaultTableModel dtm = new DefaultTableModel();
-        dtm.addColumn("Mã SV");
-        dtm.addColumn("Họ Tên");
-        dtm.addColumn("Lớp");
-        dtm.addColumn("Giới tính");
-        dtm.addColumn("Số đt");
+        DefaultTableModel dtm = (DefaultTableModel) tblStudents.getModel();
+        dtm.setNumRows(0);
 
         if(choose.equals("Tất cả")){
             for(Student st : std.findAll()){
@@ -54,12 +50,7 @@ public class StudentManagementPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblStudents = new javax.swing.JTable();
-        jSeparator1 = new javax.swing.JSeparator();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jComboBoxChoosedClass = new javax.swing.JComboBox<String>();
+        jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         btnDelete = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
@@ -78,55 +69,16 @@ public class StudentManagementPanel extends javax.swing.JPanel {
         btnSave = new javax.swing.JButton();
         btnFind = new javax.swing.JButton();
         btnNew = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblStudents = new javax.swing.JTable();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBoxChoosedClass = new javax.swing.JComboBox<String>();
 
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
-            }
-        });
-
-        tblStudents.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tblStudents.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblStudentsMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tblStudents);
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Quản Lý Sinh Viên");
-
-        jLabel2.setText("Lớp:");
-
-        jComboBoxChoosedClass.setToolTipText("");
-        jComboBoxChoosedClass.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBoxChoosedClassItemStateChanged(evt);
-            }
-        });
-        jComboBoxChoosedClass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxChoosedClassActionPerformed(evt);
             }
         });
 
@@ -232,7 +184,7 @@ public class StudentManagementPanel extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(btnFind, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                                .addComponent(btnFind, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnNew, javax.swing.GroupLayout.Alignment.LEADING))
                             .addComponent(btnResetPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -302,9 +254,99 @@ public class StudentManagementPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDelete))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnResetPassword)))
                 .addContainerGap())
+        );
+
+        tblStudents.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Mã SV", "Họ Tên", "Lớp", "Giới tính", "SĐT"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblStudents.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblStudentsMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblStudents);
+        if (tblStudents.getColumnModel().getColumnCount() > 0) {
+            tblStudents.getColumnModel().getColumn(1).setPreferredWidth(150);
+            tblStudents.getColumnModel().getColumn(2).setPreferredWidth(50);
+            tblStudents.getColumnModel().getColumn(3).setPreferredWidth(50);
+        }
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Quản Lý Sinh Viên");
+
+        jLabel2.setText("Lớp:");
+
+        jComboBoxChoosedClass.setToolTipText("");
+        jComboBoxChoosedClass.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxChoosedClassItemStateChanged(evt);
+            }
+        });
+        jComboBoxChoosedClass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxChoosedClassActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(295, 295, 295)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBoxChoosedClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(298, 298, 298)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addComponent(jSeparator1)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jComboBoxChoosedClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -313,66 +355,17 @@ public class StudentManagementPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 296, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBoxChoosedClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(364, 364, 364))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
-                        .addGap(14, 14, 14))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(298, 298, 298)
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jComboBoxChoosedClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jComboBoxChoosedClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxChoosedClassActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxChoosedClassActionPerformed
-
-    private void txtStudentIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStudentIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtStudentIdActionPerformed
-
-    private void txtStudentNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStudentNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtStudentNameActionPerformed
-
-    private void txtClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClassActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtClassActionPerformed
-
-    private void rdbMaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbMaleActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rdbMaleActionPerformed
-
-    private void txtTelephoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelephoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTelephoneActionPerformed
     
     public boolean validateForm(){
         if(txtStudentId.getText().isEmpty() || txtStudentName.getText().isEmpty()){
@@ -381,47 +374,51 @@ public class StudentManagementPanel extends javax.swing.JPanel {
         return true;
     }
     
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        if(validateForm()){
-            StudentDAO stdao = new StudentDAO();
-            ClassDAO csdao = new ClassDAO();
-            Student st = new Student();
-            Class cs = new Class();
-            st.setStudentId(this.txtStudentId.getText());
-            st.setName(this.txtStudentName.getText());
-            st.setClassId(this.txtClass.getText());
-            st.setPassword(st.getStudentId());
-            st.setTelephone(this.txtTelephone.getText());
-            st.setSex(rdbMale.isSelected() ? "Nam" : "Nữ");
-            
-            if (csdao.findClass(txtClass.getText()) == null){
-                JOptionPane.showMessageDialog(null, "Lớp " + txtClass.getText() + " không tồn tại");
-                return;
-            }
-            if(stdao.saveStudent(st)){
-                JOptionPane.showMessageDialog(null, "Thêm 1 sinh viên thành công");
-                LoadData(st.getClassId());
-                jComboBoxChoosedClass.setSelectedItem(st.getClassId());
-                
-                //Update total student in class
-                cs = csdao.findClass(st.getClassId());
-                cs.setTotal(cs.getTotal() + 1);
-                if(st.getSex().equals("Nam")){
-                    cs.setTotalMales(cs.getTotalMales() + 1 );
-                }
-                else{
-                    cs.setTotalFemales(cs.getTotalFemales() + 1 );
-                }
-                csdao.updateClass(cs);
-            }
-            else {
-                JOptionPane.showMessageDialog(null, "Thêm sinh viên thất bại");
-            }
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        ClassDAO cdao = new ClassDAO();
+        
+        DefaultComboBoxModel  model = new DefaultComboBoxModel ();
+        model.addElement("Tất cả");
+        for(Class cs : cdao.findAll()){
+            model.addElement(cs.getClassId());
         }
-        else{
-            JOptionPane.showMessageDialog(null,"Vui lòng nhập đầy đủ thông tin");
+        jComboBoxChoosedClass.setModel(model);
+    }//GEN-LAST:event_formComponentShown
+
+    private void jComboBoxChoosedClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxChoosedClassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxChoosedClassActionPerformed
+
+    private void jComboBoxChoosedClassItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxChoosedClassItemStateChanged
+        LoadData(jComboBoxChoosedClass.getSelectedItem().toString());
+    }//GEN-LAST:event_jComboBoxChoosedClassItemStateChanged
+
+    private void tblStudentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblStudentsMouseClicked
+        StudentDAO std = new StudentDAO();
+        try{
+            int id = tblStudents.getSelectedRow();
+            String studentId = tblStudents.getValueAt(id, 0).toString();
+            Student st = std.findStudent(studentId);
+            txtStudentId.setText(st.getStudentId());
+            txtClass.setText(st.getClassId());
+            txtStudentName.setText(st.getName());
+            txtTelephone.setText(st.getTelephone());
+            if (st.getSex().equals("Nam")){
+                rdbMale.setSelected(true);
+            }else{
+                rdbFemale.setSelected(true);
+            }
+        }catch(Exception e){
         }
-    }//GEN-LAST:event_btnSaveActionPerformed
+    }//GEN-LAST:event_tblStudentsMouseClicked
+
+    private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
+        txtStudentId.setText("");
+        txtClass.setText("");
+        txtStudentName.setText("");
+        txtTelephone.setText("");
+        buttonGroup1.clearSelection();
+    }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFindActionPerformed
         StudentDAO std = new StudentDAO();
@@ -443,36 +440,66 @@ public class StudentManagementPanel extends javax.swing.JPanel {
                         rdbFemale.setSelected(true);
                     }
                     //Fill Data in table
-                    DefaultTableModel dtm = new DefaultTableModel();
-                    dtm.addColumn("Mã SV");
-                    dtm.addColumn("Họ Tên");
-                    dtm.addColumn("Lớp");
-                    dtm.addColumn("Giới tính");
-                    dtm.addColumn("Số đt");
+                    DefaultTableModel dtm = (DefaultTableModel) tblStudents.getModel();
+                    dtm.setNumRows(0);
                     dtm.addRow(new Object[]{st.getStudentId(), st.getName(), st.getClassId(), st.getSex(), st.getTelephone()});
                     this.tblStudents.setModel(dtm);
                 }else
-                    JOptionPane.showMessageDialog(null,"Không tìm thấy sinh viên này");
+                JOptionPane.showMessageDialog(null,"Không tìm thấy sinh viên này");
             }catch(Exception e){
                 e.printStackTrace();
             }
         }
     }//GEN-LAST:event_btnFindActionPerformed
 
-    private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
-        txtStudentId.setText("");
-        txtClass.setText("");
-        txtStudentName.setText("");
-        txtTelephone.setText("");
-        buttonGroup1.clearSelection();
-    }//GEN-LAST:event_btnNewActionPerformed
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        if(validateForm()){
+            StudentDAO stdao = new StudentDAO();
+            ClassDAO csdao = new ClassDAO();
+            Student st = new Student();
+            Class cs = new Class();
+            st.setStudentId(this.txtStudentId.getText());
+            st.setName(this.txtStudentName.getText());
+            st.setClassId(this.txtClass.getText());
+            st.setPassword(st.getStudentId());
+            st.setTelephone(this.txtTelephone.getText());
+            st.setSex(rdbMale.isSelected() ? "Nam" : "Nữ");
+
+            if (csdao.findClass(txtClass.getText()) == null){
+                JOptionPane.showMessageDialog(null, "Lớp " + txtClass.getText() + " không tồn tại");
+                return;
+            }
+            if(stdao.saveStudent(st)){
+                JOptionPane.showMessageDialog(null, "Thêm 1 sinh viên thành công");
+                LoadData(st.getClassId());
+                jComboBoxChoosedClass.setSelectedItem(st.getClassId());
+
+                //Update total student in class
+                cs = csdao.findClass(st.getClassId());
+                cs.setTotal(cs.getTotal() + 1);
+                if(st.getSex().equals("Nam")){
+                    cs.setTotalMales(cs.getTotalMales() + 1 );
+                }
+                else{
+                    cs.setTotalFemales(cs.getTotalFemales() + 1 );
+                }
+                csdao.updateClass(cs);
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Thêm sinh viên thất bại");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Vui lòng nhập đầy đủ thông tin");
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnResetPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetPasswordActionPerformed
         if(!txtStudentId.getText().isEmpty()){
             StudentDAO std = new StudentDAO();
             Student st = std.findStudent(txtStudentId.getText());
             st.setPassword(st.getStudentId());
-                
+
             if(std.updateStudent(st)){
                 JOptionPane.showMessageDialog(null, "Khởi tạo mật khẩu mặc định");
                 LoadData(jComboBoxChoosedClass.getSelectedItem().toString());
@@ -482,6 +509,26 @@ public class StudentManagementPanel extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_btnResetPasswordActionPerformed
+
+    private void txtTelephoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelephoneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTelephoneActionPerformed
+
+    private void txtStudentIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStudentIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStudentIdActionPerformed
+
+    private void rdbMaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbMaleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rdbMaleActionPerformed
+
+    private void txtClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtClassActionPerformed
+
+    private void txtStudentNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStudentNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStudentNameActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         if(validateForm()){
@@ -506,36 +553,17 @@ public class StudentManagementPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
-    private void tblStudentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblStudentsMouseClicked
-        StudentDAO std = new StudentDAO();
-        try{
-            int id = tblStudents.getSelectedRow();
-            String studentId = tblStudents.getValueAt(id, 0).toString();
-            Student st = std.findStudent(studentId);
-            txtStudentId.setText(st.getStudentId());
-            txtClass.setText(st.getClassId());
-            txtStudentName.setText(st.getName());
-            txtTelephone.setText(st.getTelephone());
-            if (st.getSex().equals("Nam")){
-                rdbMale.setSelected(true);
-            }else{
-                rdbFemale.setSelected(true);
-            }
-        }catch(Exception e){
-        }
-    }//GEN-LAST:event_tblStudentsMouseClicked
-
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         if(!txtStudentId.getText().isEmpty()){
             StudentDAO std = new StudentDAO();
             ClassDAO csdao = new ClassDAO();
             Class cs = new Class();
             Student st = std.findStudent(txtStudentId.getText());
-                
+
             if(std.deleteStudent(st)){
                 JOptionPane.showMessageDialog(null, "Xóa sinh viên thành công");
                 LoadData(jComboBoxChoosedClass.getSelectedItem().toString());
-                
+
                 cs = csdao.findClass(st.getClassId());
                 cs.setTotal(cs.getTotal() - 1);
                 if(st.getSex().equals("Nam")){
@@ -553,21 +581,6 @@ public class StudentManagementPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập mã SV cần xóa");
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
-
-    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        ClassDAO cdao = new ClassDAO();
-        
-        DefaultComboBoxModel  model = new DefaultComboBoxModel ();
-        model.addElement("Tất cả");
-        for(Class cs : cdao.findAll()){
-            model.addElement(cs.getClassId());
-        }
-        jComboBoxChoosedClass.setModel(model);
-    }//GEN-LAST:event_formComponentShown
-
-    private void jComboBoxChoosedClassItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxChoosedClassItemStateChanged
-        LoadData(jComboBoxChoosedClass.getSelectedItem().toString());
-    }//GEN-LAST:event_jComboBoxChoosedClassItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -587,6 +600,7 @@ public class StudentManagementPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JRadioButton rdbFemale;
