@@ -174,11 +174,13 @@ public class LoginDialog extends javax.swing.JDialog {
                 this.setVisible(false);
                 managerForm.setVisible(true);
                 SharedData.manager = acc;
+                SharedData.student = null;
             }
             else if(st != null ){
                 this.setVisible(false);
                 studentForm.setVisible(true);
                 SharedData.student = st;
+                SharedData.manager = null;
             }
             else{
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng tài khoản, mật khẩu");
