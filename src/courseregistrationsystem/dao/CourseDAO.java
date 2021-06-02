@@ -11,18 +11,19 @@ import org.hibernate.*;
 
 public class CourseDAO {
     public List<Course> findAll(){
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try{
-            Session session = HibernateUtil.getSessionFactory().openSession();
             return session.createCriteria(Course.class).list();
         }catch(Exception ex){
             return null;
+        }finally{
+            session.close();
         }
     }
     
     public List<Course> findAllByCourseId(String subjectId){
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try{
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            
             String hql = "from Course where subjectId like :subjectId";
             Query query = session.createQuery(hql);
             query.setParameter("subjectId", subjectId);
@@ -30,14 +31,16 @@ public class CourseDAO {
             return query.list();
         }catch(Exception ex){
             return null;
+        }finally{
+            session.close();
         }
     }
     
     public Course findCourse(int courseId){
         Transaction trans = null;
         Course st = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try{
-            Session session = HibernateUtil.getSessionFactory().openSession();
             trans = session.beginTransaction();
             
             st = (Course) session.get(Course.class,courseId);
@@ -45,6 +48,8 @@ public class CourseDAO {
             trans.commit();
         }catch(Exception e){
             trans.rollback();
+        }finally{
+            session.close();
         }
         
         return st;
@@ -52,8 +57,8 @@ public class CourseDAO {
     
     public boolean deleteCourse(Course sb){
         Transaction trans = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try{
-            Session session = HibernateUtil.getSessionFactory().openSession();
             trans = session.beginTransaction();
             
             session.delete(sb);
@@ -63,14 +68,16 @@ public class CourseDAO {
         }catch(Exception e){
             trans.rollback();
             return false;
+        }finally{
+            session.close();
         }
        
     }
     
     public boolean saveCourse(Course sb){
         Transaction trans = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try{
-            Session session = HibernateUtil.getSessionFactory().openSession();
             trans = session.beginTransaction();
             session.save(sb);
             trans.commit();
@@ -78,13 +85,15 @@ public class CourseDAO {
         }catch(Exception e){
             trans.rollback();
             return false;
+        }finally{
+            session.close();
         }
     }
     
     public boolean updateCourse(Course sb){
         Transaction trans = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try{
-            Session session = HibernateUtil.getSessionFactory().openSession();
             trans = session.beginTransaction();
             session.update(sb);
             trans.commit();
@@ -92,6 +101,8 @@ public class CourseDAO {
         }catch(Exception e){
             trans.rollback();
             return false;
+        }finally{
+            session.close();
         }
     }
     

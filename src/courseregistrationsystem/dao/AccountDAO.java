@@ -11,19 +11,22 @@ import org.hibernate.*;
 
 public class AccountDAO {
      public List<Account> findAll(){
+         Session session = HibernateUtil.getSessionFactory().openSession();
         try{
-            Session session = HibernateUtil.getSessionFactory().openSession();
             return session.createCriteria(Account.class).list();
         }catch(Exception ex){
             return null;
+        }finally{
+            session.close();
         }
     }
      
     public Account findAccount(String username){
         Transaction trans = null;
         Account acc = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try{
-            Session session = HibernateUtil.getSessionFactory().openSession();
+            
             trans = session.beginTransaction();
    
             acc = (Account) session.get(Account.class,username);
@@ -31,6 +34,8 @@ public class AccountDAO {
             trans.commit();
         }catch(Exception e){
             trans.rollback();
+        }finally{
+            session.close();
         }
         
         return acc;
@@ -38,8 +43,9 @@ public class AccountDAO {
     
     public boolean saveAccount(Account acc){
         Transaction trans = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try{
-            Session session = HibernateUtil.getSessionFactory().openSession();
+            
             trans = session.beginTransaction();
             session.save(acc);
             trans.commit();
@@ -47,13 +53,15 @@ public class AccountDAO {
         }catch(Exception e){
             trans.rollback();
             return false;
+        }finally{
+            session.close();
         }
     }
     
     public boolean updateAccount(Account acc){
         Transaction trans = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try{
-            Session session = HibernateUtil.getSessionFactory().openSession();
             trans = session.beginTransaction();
             session.update(acc);
             trans.commit();
@@ -61,13 +69,15 @@ public class AccountDAO {
         }catch(Exception e){
             trans.rollback();
             return false;
+        }finally{
+            session.close();
         }
     }
     
     public boolean deleteAccount(Account acc){
         Transaction trans = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try{
-            Session session = HibernateUtil.getSessionFactory().openSession();
             trans = session.beginTransaction();
             
             session.delete(acc);
@@ -77,15 +87,16 @@ public class AccountDAO {
         }catch(Exception e){
             trans.rollback();
             return false;
+        }finally{
+            session.close();
         }
     }
     
     public Account checkLogin(String username, String password){
         
         Transaction trans = null;
-        
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try{
-            Session session = HibernateUtil.getSessionFactory().openSession();
             trans = session.beginTransaction();
 
             Account acc = (Account)session.get(Account.class, username);
@@ -94,6 +105,8 @@ public class AccountDAO {
                 return acc;
             }
         }catch(Exception e){   
+        }finally{
+            session.close();
         }
         return null;
     }
